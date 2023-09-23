@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lokesh75way/book-search/static/css/main.1b55ce00.css",
+    "main.js": "/lokesh75way/book-search/static/js/main.e22cadbf.js",
+    "static/js/787.28cb0dcd.chunk.js": "/lokesh75way/book-search/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/lokesh75way/book-search/index.html",
+    "main.1b55ce00.css.map": "/lokesh75way/book-search/static/css/main.1b55ce00.css.map",
+    "main.e22cadbf.js.map": "/lokesh75way/book-search/static/js/main.e22cadbf.js.map",
+    "787.28cb0dcd.chunk.js.map": "/lokesh75way/book-search/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1b55ce00.css",
+    "static/js/main.e22cadbf.js"
+  ]
+}
