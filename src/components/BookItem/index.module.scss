@@ -1,0 +1,20 @@
+.item {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  .imageContainer {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 40px;
+    width: 40px;
+    .image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .label {
+    font-size: 16px;
+  }
+}
