@@ -18,6 +18,9 @@
     margin-top: 78px;
     flex-direction: column;
   }
+  &.noBook {
+    justify-content: center;
+  }
 }
 .image {
   width: 300px;

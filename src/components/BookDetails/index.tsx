@@ -4,6 +4,7 @@ import styles from "./index.module.scss";
 import Card from "../Card";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 type Props = {
   book?: Book;
@@ -32,8 +33,10 @@ export default function BookDetails(props: Props) {
 
   if (!props.book) {
     return (
-      <Card className={styles.container}>
-        <h2>No book found</h2>
+      <Card className={styles.card}>
+        <div className={clsx(styles.container, styles.noBook)}>
+          <h2>No book found</h2>
+        </div>
       </Card>
     );
   }

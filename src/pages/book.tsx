@@ -21,7 +21,7 @@ export default function Book() {
     if (error) {
       toast.error(
         // @ts-ignore
-        error?.message || "Something went wrong!"
+        error?.message || error?.data?.error?.message || "Something went wrong!"
       );
     }
   }, [error]);
