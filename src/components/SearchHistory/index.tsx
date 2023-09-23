@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useSearchHistory from "../../hooks/useSearhHistory";
+import useSearchHistory from "../../hooks/useSearchHistory";
 import BookItem from "../BookItem";
 import styles from "./index.module.scss";
 export default function SearchHistory() {
@@ -14,6 +14,7 @@ export default function SearchHistory() {
       {history.map((book) => {
         return (
           <div
+            key={book.id}
             className={styles.bookItem}
             onClick={() => navigate(`/books/${book.id}`)}
           >

@@ -5,8 +5,8 @@ export default function useSearchHistory(storageKeyName = "search-history") {
 
   useEffect(() => {
     const data = localStorage.getItem(storageKeyName);
-    setHistory(data ? JSON.parse(data) : history);
-  }, []);
+    setHistory((history) => (data ? JSON.parse(data) : history));
+  }, [storageKeyName]);
 
   const set = (book: Book) => {
     const result = history.filter((item) => item.id !== book.id);

@@ -1,37 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { api } from "../services/api";
 
 interface State {
-  books: Record<number, Book>;
-  authors: Record<number, Author>;
+  books: Record<string, Book>;
+  recentSearch: {
+    query: string;
+    books: Book[];
+  };
 }
 
 const initialState: State = {
   books: {},
-  authors: {},
+  recentSearch: {
+    query: "",
+    books: [],
+  },
 };
 
 export const counterSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {},
+  reducers: {
+    setRecentSearch: (state, action: PayloadAction<State["recentSearch"]>) => {
+      state.recentSearch = action.payload;
+      return state;
+    },
+  },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      api.endpoints.getAuthors.matchFulfilled,
-      (state, { payload }) => {
-        const authors: Record<number, Author> = {};
-        payload.forEach((author) => {
-          authors[author.id] = author;
-        });
-        state.authors = authors;
-        return state;
-      }
-    );
     builder.addMatcher(
       api.endpoints.getBooks.matchFulfilled,
       (state, { payload }) => {
-        const books: Record<number, Book> = {};
-        payload.forEach((book) => {
+        const books: Record<string, Book> = {};
+        payload?.items?.forEach((book) => {
           books[book.id] = book;
         });
         state.books = books;
@@ -41,4 +41,5 @@ export const counterSlice = createSlice({
   },
 });
 
+export const { setRecentSearch } = counterSlice.actions;
 export default counterSlice.reducer;

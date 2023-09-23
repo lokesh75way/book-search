@@ -6,13 +6,13 @@ type Props = {
 };
 
 export default function BookItem(props: Props) {
-  const { cover_image, title } = props.book;
+  const { title, imageLinks } = props.book.volumeInfo;
   return (
     <div className={styles.item}>
       <div className={styles.imageContainer}>
         <img
           className={styles.image}
-          src={cover_image || noImagePlaceholder}
+          src={imageLinks?.smallThumbnail || noImagePlaceholder}
           alt={title}
         />
       </div>

@@ -2,10 +2,11 @@ import FlexBox from "../FlexBox";
 import noImagePlaceholder from "../../assets/no-image.png";
 import styles from "./index.module.scss";
 import Card from "../Card";
+import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   book?: Book;
-  author?: Author;
 };
 
 type ValueWithLabelProps = {
@@ -14,10 +15,20 @@ type ValueWithLabelProps = {
 };
 
 export default function BookDetails(props: Props) {
-  const { cover_image, title, author_id, releaseDate, pages } =
-    props.book || {};
+  const book = props.book;
+  const {
+    imageLinks,
+    title,
+    authors = [],
+    publishedDate,
+    publisher,
+    pageCount,
+    description,
+  } = book?.volumeInfo || {};
 
-  const { name = "", surname = "" } = props.author || {};
+  const image = imageLinks?.thumbnail || noImagePlaceholder;
+
+  const navigate = useNavigate();
 
   if (!props.book) {
     return (
@@ -28,21 +39,26 @@ export default function BookDetails(props: Props) {
   }
 
   return (
-    <Card className={styles.container}>
-      <img
-        className={styles.image}
-        src={cover_image || noImagePlaceholder}
-        alt={title}
-      />
-      <div className={styles.details}>
-        <ValueWithLabel value={title} label="Title" />
-        <ValueWithLabel value={releaseDate} label="Release Date" />
-        <ValueWithLabel value={pages} label="Pages" />
-        <ValueWithLabel
-          value={`${name}${surname ? " " : ""}${surname}` || author_id}
-          label="Author"
-        />
+    <Card className={styles.card}>
+      <Button className={styles.backButton} onClick={() => navigate("/")}>
+        Back
+      </Button>
+      <div className={styles.container}>
+        <img className={styles.image} src={image} alt={title} />
+        <div className={styles.details}>
+          <ValueWithLabel value={title} label="Title" />
+          <ValueWithLabel value={pageCount} label="Pages" />
+          <ValueWithLabel value={authors.join(", ")} label="Author" />
+          <ValueWithLabel value={publisher} label="Publisher" />
+          <ValueWithLabel value={publishedDate} label="Published Date" />
+        </div>
       </div>
+      {description && (
+        <div className={styles.description}>
+          <h2>Description</h2>
+          <div dangerouslySetInnerHTML={{ __html: description }} />
+        </div>
+      )}
     </Card>
   );
 }
@@ -50,7 +66,7 @@ export default function BookDetails(props: Props) {
 const ValueWithLabel = (props: ValueWithLabelProps) => {
   const { value, label } = props;
   return (
-    <FlexBox alignItems="center" marginBottom="10px">
+    <FlexBox marginBottom="10px">
       <p className={styles.label}>{label}</p> :
       <p className={styles.value}>{value}</p>
     </FlexBox>

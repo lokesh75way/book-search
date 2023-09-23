@@ -1,46 +1,36 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetAuthorsQuery, useGetBookByIdQuery } from "../services/api";
+import { useParams } from "react-router-dom";
+import { useGetBookByIdQuery } from "../services/api";
 import { toast } from "react-toastify";
 import BookDetails from "../components/BookDetails";
-import Button from "../components/Button";
 import Loader from "../components/Loader";
 import FlexBox from "../components/FlexBox";
 
 export default function Book() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const {
-    data: authors = [],
-    isLoading: authorLoading,
-    error: authorError,
-  } = useGetAuthorsQuery(null);
+  const { id = "" } = useParams();
 
   const {
-    data = [],
+    data: book,
     isLoading,
     error,
-  } = useGetBookByIdQuery(Number(id), {
-    skip: typeof Number(id) !== "number",
+  } = useGetBookByIdQuery(id, {
+    skip: !id,
   });
 
-  const book = data.find((book) => book.id === Number(id));
-  const author = authors.find((author) => author.id === book?.author_id);
-
   useEffect(() => {
-    if (error || authorError) {
+    if (error) {
       toast.error(
         // @ts-ignore
-        error?.message || authorError?.message || "Something went wrong!"
+        error?.message || "Something went wrong!"
       );
     }
-  }, [error, authorError]);
+  }, [error]);
 
-  if (isLoading || authorLoading) {
+  if (isLoading) {
     return (
       <FlexBox
-        width="100%"
-        height="100%"
+        width="100vw"
+        height="100vh"
         alignItems="center"
         justifyContent="center"
       >
@@ -50,9 +40,8 @@ export default function Book() {
   }
 
   return (
-    <div>
-      <Button onClick={() => navigate("/")}>Back</Button>
-      <BookDetails book={book} author={author} />
-    </div>
+    <FlexBox>
+      <BookDetails book={book} />
+    </FlexBox>
   );
 }
