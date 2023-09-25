@@ -50,6 +50,11 @@ interface PanelizationSummary {
 interface ImageLinks {
   smallThumbnail: string;
   thumbnail: string;
+  thumbnail?: string;
+  small?: string;
+  medium?: string;
+  large?: string;
+  extraLarge?: string;
 }
 
 interface SaleInfo {
